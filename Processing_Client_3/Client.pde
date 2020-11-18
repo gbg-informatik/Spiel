@@ -17,10 +17,14 @@ public class Client
 
       // establish the connection with server port 5056 
       s = new Socket(ip, 5056); 
-
+      println("Connected");
+      
       // obtaining input and out streams 
-      ois = new ObjectInputStream(s.getInputStream()); 
+      println("Establishing Streams");
       oos = new ObjectOutputStream(s.getOutputStream());
+      println("OOS Established");
+      ois = new ObjectInputStream(s.getInputStream()); 
+      println("OIS Established");
     }
     catch(Exception e) { 
       e.printStackTrace();
@@ -30,6 +34,7 @@ public class Client
 
   void send() throws IOException {
     try {
+      println("Sending");
       System.out.println((TransmissionObject)ois.readObject()); 
       TransmissionObject tosend = new TransmissionObject(); 
       oos.writeObject(tosend);

@@ -20,6 +20,7 @@ void setup() {
   catch (IOException e) {
     e.printStackTrace();
   }
+  println("Setup done");
 } 
 
 void draw() { 
