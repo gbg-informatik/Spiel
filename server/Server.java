@@ -52,10 +52,10 @@ public class Server
 		}
 	}
 }
-/*
+
 class TransmissionObject implements Serializable{
 	int[] data = {4,5,6,7};
-}*/
+}
 
 // ClientHandler class
 class ClientHandler extends Thread
