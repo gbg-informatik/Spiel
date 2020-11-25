@@ -16,6 +16,8 @@ void setup() {
   }
   try {
     c.startClient();
+    println("Client Started");
+    println(c.scn);
   }
   catch (IOException e) {
     e.printStackTrace();

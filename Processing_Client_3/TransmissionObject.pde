@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 class TransmissionObject implements Serializable{
-  int[] data = {1,2,3};
+  int data = 1;
 }

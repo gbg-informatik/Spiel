@@ -35,11 +35,13 @@ public class Client
   void send() throws IOException {
     try {
       println("Sending");
+      println(oos);
       //println((TransmissionObject)ois.readObject()); 
       println("MOIN");
+      String a = "MNNNW";
       TransmissionObject tosend = new TransmissionObject(); 
       oos.writeObject(tosend);
-      //oos.flush();
+      oos.flush();
 
     }    
     catch(Exception e) { 
