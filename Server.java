@@ -29,9 +29,11 @@ public class Server {
 
    void run(java.net.Socket client) throws IOException{
       while(true){
+        System.out.println("sending");
+        schreibeNachricht(client, "0;5;10;1;10;20");
         String nachricht = leseNachricht(client);
-        System.out.println(date());
-        schreibeNachricht(client, nachricht);
+        System.out.println(System.currentTimeMillis());
+        System.out.println(nachricht);
       }
    }
 

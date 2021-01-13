@@ -31,7 +31,8 @@ void draw() {
     a.put("x","5");
     a.put("y","20");
     println(a.getInt("x"));
-    c.send(a);
+    c.send("Hello World!");
+    println(c.recieve());
   }
   catch(Exception e) { 
     e.printStackTrace();
@@ -58,8 +59,28 @@ void reciveData() {
  posY2 = data[1];
  }
  }
- 
+
  void sendData() {
  c.write(posX1 + " " + posY1 + "\n");
  }
  */
+ /*
+ void sendString(){
+   try {
+     println("sending");
+     String data = players[0].getPosition();
+     //send position
+     println("data send");
+   }
+ }
+ 
+ void reciveString() {
+   try {
+     println("reciving");
+     String data = "";
+     //data = recived data
+     String[] split = data.split(";");
+     players[Integer.valueOf(split[3])].changePosition(Float.valueOf(split[4]),Float.valueOf(split[5]));
+     
+   }
+ }*/

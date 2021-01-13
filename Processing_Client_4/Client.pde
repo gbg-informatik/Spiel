@@ -29,16 +29,15 @@ public class Client
   }
 
 
-  void send(JSONObject data) throws IOException {
+  void send(String data) throws IOException {
     try {
       //System.out.println(dis.readUTF()); 
-      String tosend = data.toString(); 
-      println(tosend);
-      dos.writeUTF(tosend);
+      println(data);
+      dos.writeUTF(data);
 
       // If client sends exit,close this connection 
       // and then break from the while loop 
-      if (tosend.equals("Exit")) 
+      if (data.equals("Exit")) 
       { 
         System.out.println("Closing this connection : " + s); 
         s.close(); 
@@ -51,6 +50,18 @@ public class Client
       e.printStackTrace();
     }
   }
+  
+  String recieve() throws IOException {
+    BufferedReader bufferedReader =
+      new BufferedReader(
+        new InputStreamReader(
+          s.getInputStream()));
+    char[] buffer = new char[200];
+    int anzahlZeichen = bufferedReader.read(buffer, 0, 200); // blockiert bis Nachricht empfangen
+    String nachricht = new String(buffer, 0, anzahlZeichen);
+    return nachricht;
+  }
+
 
   void endStream() throws IOException {
     try {
