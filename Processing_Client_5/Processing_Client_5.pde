@@ -27,19 +27,12 @@ void draw() {
   clear();
   try {
     println("sending");
-    JSONObject a = new JSONObject();
-    a.put("x","5");
-    a.put("y","20");
-    println(a.getInt("x"));
-    c.send("Hello World!");
-    println(c.recieve());
+    c.sendString();
+    c.reciveString();
   }
   catch(Exception e) { 
     e.printStackTrace();
   }
-
-  //  sendData();
-  //  reciveData();
   for (int i = 0; i < players.length; i++) {
     players[i].show();
   }
@@ -48,39 +41,3 @@ void draw() {
 void keyPressed() {
   players[0].update(key);
 }
-
-/*
-void reciveData() {
- if (c.available() > 0) { 
- input = c.readString(); 
- input = input.substring(0,input.indexOf("\n"));  // Only up to the newline
- data = int(split(input, ' '));  // Split values into an array
- posX2 = data[0];
- posY2 = data[1];
- }
- }
-
- void sendData() {
- c.write(posX1 + " " + posY1 + "\n");
- }
- */
- /*
- void sendString(){
-   try {
-     println("sending");
-     String data = players[0].getPosition();
-     //send position
-     println("data send");
-   }
- }
- 
- void reciveString() {
-   try {
-     println("reciving");
-     String data = "";
-     //data = recived data
-     String[] split = data.split(";");
-     players[Integer.valueOf(split[3])].changePosition(Float.valueOf(split[4]),Float.valueOf(split[5]));
-     
-   }
- }*/

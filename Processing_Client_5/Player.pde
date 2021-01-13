@@ -32,4 +32,15 @@ class Player {
       break;
     }
   }
+  
+  String getPosition() {
+    String position = "";
+    position += pos.x + "," + pos.y;
+    return(position);
+  }
+  
+  void changePosition(float x, float y) {
+    pos.x = x;
+    pos.y = y;
+  }
 }

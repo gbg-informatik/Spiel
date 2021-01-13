@@ -5,6 +5,7 @@ public class Client
   Socket s;
   DataInputStream dis;
   DataOutputStream dos;
+  int id;
   
   void startClient() throws IOException {
     try {
@@ -21,8 +22,33 @@ public class Client
       println("get OutputStream");
       dos = new DataOutputStream(s.getOutputStream());
       println("get InputStream");
-      dis = new DataInputStream(s.getInputStream()); 
+      dis = new DataInputStream(s.getInputStream());
     }
+    catch(Exception e) { 
+      e.printStackTrace();
+    }
+  }
+
+  void sendString() {
+    println("sending"); 
+    String data = players[0].getPosition();
+    try {
+      send(data);
+      println("data send");
+    }
+    catch(Exception e) { 
+      e.printStackTrace();
+      println("data sending error");
+    }
+  }
+
+  void reciveString() {
+    try {
+      println("reciving");
+      String data = recieve();
+      String[] split = data.split(";");
+      players[Integer.valueOf(split[3])].changePosition(Float.valueOf(split[4]), Float.valueOf(split[5]));
+    }    
     catch(Exception e) { 
       e.printStackTrace();
     }
@@ -50,12 +76,12 @@ public class Client
       e.printStackTrace();
     }
   }
-  
+
   String recieve() throws IOException {
     BufferedReader bufferedReader =
       new BufferedReader(
-        new InputStreamReader(
-          s.getInputStream()));
+      new InputStreamReader(
+      s.getInputStream()));
     char[] buffer = new char[200];
     int anzahlZeichen = bufferedReader.read(buffer, 0, 200); // blockiert bis Nachricht empfangen
     String nachricht = new String(buffer, 0, anzahlZeichen);
