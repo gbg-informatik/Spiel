@@ -35,7 +35,7 @@ class Player {
   
   String getPosition() {
     String position = "";
-    position += pos.x + "," + pos.y;
+    position += pos.x + ";" + pos.y;
     return(position);
   }
   

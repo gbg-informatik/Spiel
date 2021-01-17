@@ -14,13 +14,14 @@ public class Server_new
 	{
 		// server is listening on port 5056
 		ServerSocket ss = new ServerSocket(5056);
-
+		DataObject dob = new DataObject();
+		int threadIndex = 0;		// 0, but 1 for leaving the first client positions of dob open
 		// running infinite loop for getting
 		// client request
 		while (true)
 		{
 			Socket s = null;
-
+			System.out.println("Server_new running on Port: 5056");
 			try
 			{
 				// socket object to receive incoming client requests
@@ -35,8 +36,7 @@ public class Server_new
 				System.out.println("Assigning new thread for this client");
 
 				// create a new thread object
-				Thread t = new ClientHandler(s, dis, dos);
-
+				Thread t = new ClientHandler(s, dis, dos, dob, threadIndex++);
 				// Invoking the start() method
 				t.start();
 
@@ -49,20 +49,46 @@ public class Server_new
 	}
 }
 
+class DataObject{
+	float[][] data;
+	DataObject(){
+		data = new float[10][2];	// [max player count] [data per player]
+		data[0][0] = 215;
+		data[0][0] = 110;
+	}
+
+	synchronized void update(int index, float x, float y){
+		data[index][0] = x;
+		data[index][1] = y;
+	}
+	synchronized String getData(int index){
+		return data[index][0] + ";" + data[index][1];
+	}
+	synchronized void move(int index, int counter){
+		data[index][0] = (float)(java.lang.Math.sin(counter/20) * 100 + 100);
+		data[index][1] = (float)(java.lang.Math.cos(counter/20) * 100 + 100);
+		System.out.println("move: " + data[index][0] + " " + data[index][0]);
+	}
+}
 // ClientHandler class
 class ClientHandler extends Thread
 {
 	final DataInputStream dis;
 	final DataOutputStream dos;
 	final Socket s;
-
+	DataObject dob;
+	int threadIndex;
+	int counter = 0;
 
 	// Constructor
-	public ClientHandler(Socket s, DataInputStream dis, DataOutputStream dos)
+	public ClientHandler(Socket s, DataInputStream dis, DataOutputStream dos, DataObject dob, int threadIndex)
 	{
 		this.s = s;
 		this.dis = dis;
 		this.dos = dos;
+		this.dob = dob;
+		this.threadIndex = threadIndex;
+		System.out.println(this.threadIndex);
 	}
 
 	@Override
@@ -74,56 +100,23 @@ class ClientHandler extends Thread
 		{
 			try {
 
-				boolean exitstatement = readData();
-				sendData();
+				int exitstatement = readData();
+				//dob.move(0, counter++);
 
-				if(exitstatement)
+
+				if(exitstatement == -1)
 				{
-					System.out.println("Client " + this.s + " sends exit...");
+					System.out.println("Client " + threadIndex + " : " + this.s + " sends exit...");
 					System.out.println("Closing this connection.");
 					this.s.close();
 					System.out.println("Connection closed");
 					break;
 				}
-
-				/*
-				// Ask user what he wants
-				dos.writeUTF("What do you want?[Date | Time]..\n"+
-							"Type Exit to terminate connection.");
-
-				// receive the answer from client
-				received = dis.readUTF();
-
-				if(received.equals("Exit"))
-				{
-					System.out.println("Client " + this.s + " sends exit...");
-					System.out.println("Closing this connection.");
-					this.s.close();
-					System.out.println("Connection closed");
-					break;
+				if(exitstatement != 0){
+					sendData();
 				}
-
-				// write on output stream based on the
-				// answer from the client
-				switch (received) {
-
-					case "Date" :
-						toreturn = fordate.format(date);
-						dos.writeUTF(toreturn);
-						break;
-
-					case "Time" :
-						toreturn = fortime.format(date);
-						dos.writeUTF(toreturn);
-						break;
-
-					default:
-						dos.writeUTF("Invalid input");
-						break;
-				}
-				*/
 			} catch (IOException e) {
-				e.printStackTrace();
+			//	e.printStackTrace();
 			}
 		}
 
@@ -138,17 +131,59 @@ class ClientHandler extends Thread
 		}
 	}
 
-	boolean readData() throws IOException{
+	int readData() throws IOException{
 		String received = dis.readUTF();
-		System.out.println(received);
+		System.out.println("recieved: " + received);
 		if(received.equals("Exit"))
 		{
-			return true;
+			return -1;
 		}
-		return false;
+		if(received.equals("Get Playercount")){
+			try{
+				System.out.println("sending Playercount: " + dob.data.length);
+				sendData(dob.data.length);
+			}catch(IOException e){
+				System.out.println("Failed to send Playercount");
+				e.printStackTrace();
+			}
+			return 0;
+		}
+		if(received.equals("Get ID")){
+			try{
+				System.out.println("sending ID: " + threadIndex);
+				sendData(threadIndex);
+			}catch(IOException e){
+				System.out.println("Failed to send ID");
+				e.printStackTrace();
+			}
+			return 0;
+		}
+		String[] split = received.split(";");		// id;x-pos;y-pos
+		dob.update(Integer.parseInt(split[0]),Float.parseFloat(split[1]),Float.parseFloat(split[2]));
+//		for(int i = 0; i < split.length/3; i ++){
+//			dob.update(Integer.parseInt(split[i]),Float.parseFloat(split[i+1]),Float.parseFloat(split[i+2]));
+//		}
+		return 1;
 	}
 
 	void sendData() throws IOException{
-		dos.writeUTF("0;5;10;1;111;20");
+		sendData(-1);
+	}
+
+	void sendData(int data) throws IOException{
+		String sending = "";//"0;0;" + dob.data[0][0] + ";" + dob.data[0][1];
+		if(data == -1){
+			for(int i =  0; i < dob.data.length; i++){
+				sending += dob.getData(i);
+				if(i < dob.data.length -1){
+					sending += ";";
+				}
+			}
+		}else{
+			sending += data;
+		}
+		System.out.println("Sending: " + sending);
+		dos.flush();
+		dos.writeUTF(sending);//0;0;0;1;150;200");
 	}
 }
