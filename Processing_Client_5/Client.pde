@@ -12,7 +12,7 @@ public class Client
       scn = new Scanner(System.in);
 
       // getting localhost ip 
-      ip = InetAddress.getByName("localhost"); 
+      ip = InetAddress.getByName("cyberwehr.eu");//"localhost"); 
 
       // establish the connection with server port 5056 
       println("establishing connection");
