@@ -6,7 +6,6 @@ void setup() {
   
   size(1280, 720);
   String gPath = "../../client/graphics/map/";
-  Tile sand = new Tile("sand", 0, gPath + "sand.png");
   Tile boden = new Tile("boden", 1, gPath + "Boden.png");
   Tile wall = new Tile("mauer", 1, gPath + "MauerEinzel.png");
   Tile lava = new Tile("lava", 1, gPath + "LavaKreuzung.png");
@@ -16,7 +15,6 @@ void setup() {
   Tile coop_b = new Tile("coop_b", 1, gPath + "CoOp-B.png");
   
   toolbar = new Toolbar(0,0, 50, height);
-  toolbar.addTile(sand);
   toolbar.addTile(boden);
   toolbar.addTile(wall);
   toolbar.addTile(lava);
