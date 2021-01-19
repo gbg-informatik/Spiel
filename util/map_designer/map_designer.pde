@@ -1,112 +1,55 @@
 
 Toolbar toolbar;
+Map map;
 
 void setup() {
+  
   size(1280, 720);
+  String gPath = "../../client/graphics/map/";
+  Tile sand = new Tile("sand", 0, gPath + "sand.png");
+  Tile boden = new Tile("boden", 1, gPath + "Boden.png");
+  Tile wall = new Tile("mauer", 1, gPath + "MauerEinzel.png");
+  Tile lava = new Tile("lava", 1, gPath + "LavaKreuzung.png");
+  Tile water = new Tile("wasser", 1, gPath + "WasserKreuzung.png");
+  Tile button = new Tile("button", 1, gPath + "Button.png");
+  Tile coop_a = new Tile("coop_a", 1, gPath + "CoOp-A.png");
+  Tile coop_b = new Tile("coop_b", 1, gPath + "CoOp-B.png");
   
-  Tile sand = new Tile("sand", 0, "sand.png");
-  toolbar = new Toolbar(0,0, 50, 500);
+  toolbar = new Toolbar(0,0, 50, height);
   toolbar.addTile(sand);
+  toolbar.addTile(boden);
+  toolbar.addTile(wall);
+  toolbar.addTile(lava);
+  toolbar.addTile(water);
+  toolbar.addTile(button);
+  toolbar.addTile(coop_a);
+  toolbar.addTile(coop_b);
   
+  map = new Map("map", 0, 20, 20, width-50, height, 50);
 }
 
 void draw() {
-  
+  background(200);
+  map.show();
   toolbar.show();
   
-}
-
-
-public class Tile {
-  private int id;
-  private String name;
-  private String filepath;
-  private PImage icon;
-  
-  Tile(String name, int id, String filepath) {
-    this.name = name;
-    this.id = id;
-    this.filepath = filepath;
-    loadIcon();
-  }
-  
-  void loadIcon() {
-    icon = loadImage(filepath);
-  }
-  
-  String getName() {
-    return name;
-  }
-  
-  int getId() {
-    return id;
-  }
-  
-  PImage getIcon() {
-    return icon;
+  if(mousePressed && mouseButton == LEFT && mouseX > 50) {
+    map.set(toolbar.getTile());
   }
 }
 
-static final int EDIT = 0;
-static final int DELETE = 1;
+void mouseClicked() {
+  if(mouseX < 50) {
+    toolbar.updateMouse();
+  }
+}
 
-class Toolbar {
- 
- PImage img_delete;
- PImage img_edit;
- 
-  
- Tile tiles[] = new Tile[30]; 
- int numTiles = 0;
- float x, y, width, height;
- int mode = EDIT;
- 
- Toolbar(float x, float y, float width, float height) {
-   this.x = x;
-   this.y = y;
-   this.width = width;
-   this.height = height;
-   
-   img_edit = loadImage("icons/edit.png");
-   img_delete = loadImage("icons/delete.png");
- }
- 
- void addTile(Tile t) {
-   tiles[numTiles] = t;
-   numTiles++;
- }
-  
- void show() {
-   fill(220);
-   noStroke();
-   rect(x,y,width, height);
-   
-   if(mode == EDIT) {
-     fill(250);
-     rect(2,2,46,46,6);
-   } else {
-     fill(250);
-     rect(2,52,46,46,6);
-   }
-   
-   image(img_edit, 5, 5, 40,40);
-   image(img_delete, 5, 55, 40,40);
-   
-   for(int t = 0; t < numTiles; t++) {
-     image(tiles[t].getIcon(), 5, t*50 + 105, 40,40);
-   }
- }
- 
- void setMode(int mode) {
-   switch(mode) {
-     case EDIT:
-       this.mode = EDIT;
-       break;
-     case DELETE:
-       this.mode = DELETE;
-       break;
-     default:
-       this.mode = EDIT;
-   }
- }
+void keyPressed() {
+  if (key == CODED) {
+    map.updateKeys();
+  }
+  toolbar.updateKeys();
+  if(key == 's') {
+    map.writeJSON();
+  }
 }
