@@ -17,7 +17,7 @@ class Player {
   //Box OffSet from Cord
   int xOffset = 50;
   int yOffset = 50;
-  color col = (0);
+  color col = color(0);
 
   Player(PVector p, color c){
     globalCords = new PVector(p.x,p.y);
@@ -103,9 +103,8 @@ class Player {
   }
 
   void show() {
-    //if (xCordCheck(localCords.x)&&yCordCheck(localCords.y)) {
-      rect(localCords.x+width/2-xOffset, localCords.y+height/2-yOffset, 50, 50);
-    //}
+    fill(col);
+    rect(localCords.x+width/2-xOffset, localCords.y+height/2-yOffset, 50, 50);
   }
 
   boolean xCordCheck(float _x) {
