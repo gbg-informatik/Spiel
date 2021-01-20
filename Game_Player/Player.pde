@@ -17,12 +17,16 @@ class Player {
   //Box OffSet from Cord
   int xOffset = 50;
   int yOffset = 50;
+  
+  //Display
   color col = color(0);
+  PImage body;
 
-  Player(PVector p, color c){
+  Player(PVector p, color c, int id){
     globalCords = new PVector(p.x,p.y);
     localCords = new PVector(0,0);
     col = c;
+    body = getBody(id);
   }
   
   void globalToLocal(PVector pPos){
@@ -30,8 +34,9 @@ class Player {
   }
 
   void showPlayer() {
-    fill(col);
-    rect((width/2)-(xOffset/2), (height/2)-(yOffset/2), xOffset, yOffset);
+    //fill(col);
+    //rect((width/2)-(xOffset/2), (height/2)-(yOffset/2), xOffset, yOffset);
+    image(body,(width/2)-(xOffset/2), (height/2)-(yOffset/2), xOffset, yOffset);
   }
 
   void pseudoCords() {
@@ -103,8 +108,9 @@ class Player {
   }
 
   void show() {
-    fill(col);
-    rect(localCords.x+width/2-xOffset, localCords.y+height/2-yOffset, 50, 50);
+    //fill(col);
+    //rect(localCords.x+width/2-xOffset, localCords.y+height/2-yOffset, 50, 50);
+    image(body,localCords.x+width/2-xOffset, localCords.y+height/2-yOffset, xOffset, yOffset);
   }
 
   boolean xCordCheck(float _x) {
@@ -123,6 +129,25 @@ class Player {
     }
   }
   
+  PImage getBody(int id){
+    String dir = "../graphics/player/";
+    switch(id){
+      case 0:   dir += "Blau-A.png";   break;
+      case 1:   dir += "Blau-B.png";   break;
+      case 2:   dir += "Gruen-A.png";  break;
+      case 3:   dir += "Gruen-B.png";  break;
+      case 4:   dir += "Mocha-A.png";  break;
+      case 5:   dir += "Mocha-B.png";  break;
+      case 6:   dir += "Lila-A.png";   break;
+      case 7:   dir += "Lila-B.png";   break;
+      case 8:   dir += "Orange-A.png"; break;
+      case 9:   dir += "Orange-B.png"; break;
+      case 10:  dir += "Ersatz-A.png"; break;
+      default:  dir += "Ersatz-B.png"; break;
+    }
+    println("dir: " + dir);
+    return loadImage(dir);
+  }
   
   //--Client Stuff--------
   String getPosition() {
