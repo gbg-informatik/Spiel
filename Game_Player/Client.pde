@@ -73,7 +73,8 @@ public class Client
         println("reciving");
         String data = recieve();
         println(data);
-        data = data.replaceAll("[A-~]+", "");  //remove all characters in ASCII range from A - z  --> cleans up recieved string
+        data = data.replaceAll("[^0-9+;+.]+", "");  //remove all characters in ASCII range except 0-9 ; .  --> cleans up recieved string
+        println(data);
         String[] split = data.split(";");
         for (int i = 0; i < players.length; i++) {
           if (i != id) {

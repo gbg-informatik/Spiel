@@ -58,7 +58,7 @@ class Player {
       break;
 
     default:
-      println("UNKNOWN PRESS");
+      println("UNKNOWN PRESS: " + _input);
     }
   }
 

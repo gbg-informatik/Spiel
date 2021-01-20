@@ -21,7 +21,9 @@ void setup() {
   //--Initialise Players--------
   players = new Player[playercount];
   for (int i = 0; i < players.length; i++) {
-    players[i] = new Player(new PVector(width/2, height/2), color(i*20,255-i*20,i*20));
+    colorMode(HSB, 360,100,100);
+    players[i] = new Player(new PVector(width/2, height/2), color(noise(i)*360,noise(i)*10+90,noise(i+5)*10+90));
+    colorMode(RGB, 255,255,255);
   }
 
   background(255);
@@ -54,7 +56,7 @@ void draw() {
 }
 
 void keyPressed() {
-  if (key != 'x' || key != 'X') {
+  if (key != 'x' && key != 'X') {
     players[id].press(key);
   } else {
     try {
@@ -67,5 +69,15 @@ void keyPressed() {
 }
 
 void keyReleased() {
-  players[id].release(key);
+  if (key != 'x' && key != 'X') {
+    players[id].release(key);
+  } else {
+    try {
+      println("EXIT");
+      c.send("Exit");
+    } 
+    catch(Exception e) { 
+      e.printStackTrace();
+    }
+  }
 }
