@@ -21,7 +21,7 @@ void setup() {
   //--Initialise Players--------
   players = new Player[playercount];
   for (int i = 0; i < players.length; i++) {
-    players[i] = new Player(new PVector(width/2, height/2));  //color(int(random(0, 255)), int(random(0, 255)), int(random(0, 255))));
+    players[i] = new Player(new PVector(width/2, height/2), color(id*20,255-id*20,id*20));
   }
 
   background(255);
@@ -42,9 +42,11 @@ void draw() {
     e.printStackTrace();
   }
   for (int i = 0; i < players.length; i++) {
-    players[i].globalToLocal(players[id].globalCords);
-    players[i].move();
-    players[i].show();
+    if (i != id) {
+      players[i].globalToLocal(players[id].globalCords);
+      players[i].move();
+      players[i].show();
+    }
   }  
   players[id].pseudoCords();
   players[id].showPlayer();

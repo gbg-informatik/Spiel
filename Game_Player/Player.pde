@@ -17,10 +17,12 @@ class Player {
   //Box OffSet from Cord
   int xOffset = 50;
   int yOffset = 50;
+  color col = (0);
 
-  Player(PVector p){
+  Player(PVector p, color c){
     globalCords = new PVector(p.x,p.y);
     localCords = new PVector(0,0);
+    col = c;
   }
   
   void globalToLocal(PVector pPos){
@@ -28,6 +30,7 @@ class Player {
   }
 
   void showPlayer() {
+    fill(col);
     rect((width/2)-(xOffset/2), (height/2)-(yOffset/2), xOffset, yOffset);
   }
 
