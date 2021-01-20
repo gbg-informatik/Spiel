@@ -7,8 +7,8 @@ void setup()
 {
   size(1920, 1080);                        
   background(0);
-  test.loadImages();
-  test.fillMap();
+  test.loadTiles();
+  test.loadMap("map.json");
 }
 
 void draw() 

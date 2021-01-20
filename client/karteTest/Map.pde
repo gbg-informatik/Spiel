@@ -1,24 +1,38 @@
 class Map
 {
-  int numImages = 4;
-  String imageNames[] = {"Boden.png", "Mauer_1.png", "Gut.png", "Böse.png"};
-  PImage images[] = new PImage[numImages];
+  int numTiles = 7;
+  String gPath = "../graphics/map/";
+  StringList tileNames = new StringList(new String [] {"boden", "mauer", "lava", "wasser", "buton", "coop_a", "coop_b"});
+  String tileImageNames[] = {"Boden.png", "MauerEinzel.png", 
+                            "LavaKreuzung.png", "WasserKreuzung.png",
+                            "Button.png", "CoOp-A.png", "CoOp-B.png"};
+  Tile tiles[] = new Tile[numTiles];
   
-  int[] [] map = new int[50] [50];
+  Tile map[][];
   
-  void loadImages() {
-    for(int i = 0; i < numImages; i++) {
-      images[i] = loadImage(imageNames[i]);      
+  int mapWidth, mapHeight;
+  
+  void loadTiles() {
+    for(int i = 0; i < numTiles; i++) {
+      tiles[i] = new Tile(tileNames.get(i), i, gPath + tileImageNames[i]);      
     }
   }
   
-  void fillMap()
-  {
-    for (int i = 0; i < 50; i++)
-    {
-      for (int j = 0; j < 50; j++)
-      {
-        map[i] [j] = int(random(4));
+ 
+  void loadMap(String filename) {
+    JSONObject json_map = loadJSONObject(filename);
+    
+    mapWidth = json_map.getInt("width");
+    mapHeight = json_map.getInt("height");
+    
+    map = new Tile[mapWidth][mapHeight];
+    
+    for(String name : tileNames) {
+      JSONArray arr = json_map.getJSONArray(name);
+      if(arr == null) continue;
+      for(int i = 0; i < arr.size(); i++) {
+        JSONObject pos = arr.getJSONObject(i);
+        map[pos.getInt("x")][pos.getInt("y")] = tiles[tileNames.index(name)];
       }
     }
   }
@@ -28,11 +42,13 @@ class Map
     clear();
     kachelx = floor((x-12*75)/75);
     kachely = floor((y-7*75)/75);
-    for (int i = 0; i < 27; i++)
+    for (int i = 0; i < mapWidth; i++)
     {
-      for (int j = 0; j < 16; j++)
+      for (int j = 0; j < mapHeight; j++)
       {
-        image( images[map[kachelx+i][kachely+j]] ,i*75-posx%75,j*75-posy%75);
+        if( kachelx + i < mapWidth && kachely+j < mapHeight && map[kachelx+i][kachely+j] != null) {
+          image( map[kachelx+i][kachely+j].getIcon() ,i*75-posx%75,j*75-posy%75);
+        }
         //fill(150);
         //rect(i*75 - x%75, j*75 - y%75, 75, 75);
       }

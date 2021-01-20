@@ -82,11 +82,26 @@ class Map {
     saveJSONObject(json, name + ".json" ,"compact");
   }
   
-  void set(Tile tile) {
+  void set(Tile tile, boolean fill) {
     int x = posX + (mouseX - xOffset) / 50;
     int y = posY + (mouseY / 50);
     if( x >= 0 && y >= 0 && x < mapWidth && y < mapHeight) {
-      tiles[x][y] = tile;
+      
+      
+      if(fill) {
+        
+        // BUG! funktioniert noch nicht so ganz.. 
+        // zeichnet nur nach oben und nach links
+        for(int i = 0; i < mapWidth; i++) {
+          for(int j = 0; j < mapHeight; j++) {
+            if( tiles[i][j] == tiles[x][y]) {
+              tiles[i][j] = tile;
+            }
+          }
+        }
+      } else {
+        tiles[x][y] = tile;
+      }
     }
   }
   

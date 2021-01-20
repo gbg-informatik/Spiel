@@ -31,6 +31,10 @@ class Toolbar {
    return tiles[selectedTile];
  }
  
+ boolean getFill() {
+   return fill;
+ }
+ 
  void show() {
    fill(220);
    noStroke();
