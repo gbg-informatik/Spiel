@@ -6,10 +6,10 @@ Player players[];
 Client c;
 int id, playercount = 1;
 
-void setup(){
+void setup() {
   surface.setResizable(true);
-  //fullScreen();
-  size(300,300);  //1920,1080
+  fullScreen();
+  //xsize(300, 300);  //1920,1080
   //--Set up Client-------------
   c = new Client();
   try {
@@ -21,7 +21,7 @@ void setup(){
   //--Initialise Players--------
   players = new Player[playercount];
   for (int i = 0; i < players.length; i++) {
-    players[i] = new Player(color(int(random(0, 255)), int(random(0, 255)), int(random(0, 255))));
+    players[i] = new Player(new PVector(width/2, height/2));  //color(int(random(0, 255)), int(random(0, 255)), int(random(0, 255))));
   }
 
   background(255);
@@ -30,11 +30,9 @@ void setup(){
   println("Setup done");
 }
 
-void draw(){
+void draw() {
   clear();
-  background(255,255,255);
-
-  clear();
+  background(255);
   try {
     println("sending");
     c.sendPosition();
@@ -44,17 +42,27 @@ void draw(){
     e.printStackTrace();
   }
   for (int i = 0; i < players.length; i++) {
-    players[i].drawMyself();
+    players[i].globalToLocal(players[id].globalCords);
+    players[i].move();
+    //  players[i].pseudoCords();
+    players[i].show();
   }
-  myPlayer.pseudoCords();
-  myPlayer.move();
-  myPlayer.showPlayer(250, 250);
+  players[id].showPlayer();
 }
 
-void keyPressed(){
-  myPlayer.press(int(key));
+void keyPressed() {
+  if (key != 'x') {
+    players[id].press(key);
+  } else {
+    try {
+      c.send("Exit");
+    } 
+    catch(Exception e) { 
+      e.printStackTrace();
+    }
+  }
 }
 
-void keyReleased(){
-  myPlayer.release(int(key));
+void keyReleased() {
+  players[id].release(key);
 }
