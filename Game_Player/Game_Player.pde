@@ -44,9 +44,9 @@ void draw() {
   for (int i = 0; i < players.length; i++) {
     players[i].globalToLocal(players[id].globalCords);
     players[i].move();
-    //  players[i].pseudoCords();
     players[i].show();
-  }
+  }  
+  players[id].pseudoCords();
   players[id].showPlayer();
 }
 

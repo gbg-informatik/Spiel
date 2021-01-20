@@ -12,8 +12,6 @@ class Player {
   PVector globalCords;
   PVector localCords;
   
-  float xCord = 0;
-  float yCord = 0;
   float diagonalMove = sqrt(12.5);
 
   //Box OffSet from Cord
@@ -26,7 +24,7 @@ class Player {
   }
   
   void globalToLocal(PVector pPos){
-    localCords = new PVector(pPos.x-globalCords.x,pPos.y-globalCords.y);      // globale Koordinaten werden zu lokalen umgerechnet
+    localCords = new PVector(-pPos.x+globalCords.x,-pPos.y+globalCords.y);      // globale Koordinaten werden zu lokalen umgerechnet
   }
 
   void showPlayer() {
@@ -34,8 +32,8 @@ class Player {
   }
 
   void pseudoCords() {
-    text(xCord, 20, 20);
-    text(yCord, 20, 40);
+    text(globalCords.x, 20, 20);
+    text(globalCords.y, 20, 40);
   }
 
   void press(char _input) {
@@ -102,9 +100,9 @@ class Player {
   }
 
   void show() {
-    if (xCordCheck(localCords.x)&&yCordCheck(localCords.y)) {
-      rect(localCords.x-xCord+width/2+xOffset, localCords.y-yCord+-height/2-yOffset, 50, 50);
-    }
+    //if (xCordCheck(localCords.x)&&yCordCheck(localCords.y)) {
+      rect(localCords.x+width/2-xOffset, localCords.y+height/2-yOffset, 50, 50);
+    //}
   }
 
   boolean xCordCheck(float _x) {
