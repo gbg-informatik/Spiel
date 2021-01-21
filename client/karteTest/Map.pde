@@ -45,31 +45,44 @@ class Map
   }
   
   // map zeichnen
-  void drawMap(int posX, int posY)    // x / y steht für die Spielerposition auf der Map
+  void drawMap(int posX, int posY)    // posX / posY steht für den Bildmittelpunkt der Map / Spieler in der Mitte des Displays
   {
     clear();
-    int kachelx = (int)(posX - (width / 2.)) / tileSize;
-    int kachely = (int)(posY - (height / 2.)) / tileSize;
     
+    // x/y index der oberen linken Kachel im Bild berechnen.
+    int offsetX = (int)(posX - (width / 2.)) / tileSize;
+    int offsetY = (int)(posY - (height / 2.)) / tileSize;
     
     print("tl "); print(posX - (width / 2.));
-    print("/ kachx "); print(kachelx);
-    print("/ kachy "); print(kachely);
+    print("/ kachx "); print(offsetX);
+    print("/ kachy "); print(offsetY);
     print("/ posx "); print(posX);
     print("/ posY "); print(posY);
     print("/ %X ");  print(posX % tileSize);
-    print("/ %Y ");  println(posY % tileSize);
+    print("/ %Y ");  print(posY % tileSize);
     
+    print("/ drawX "); print(0*50 - posX % tileSize);
+    print("/ drawX "); println(0*50 - posY % tileSize);
+    // Alle Tiles im Bildausschnitt Zeichnen
     for(int x = -1; x < width / 50 + 1; x++) {
-      for(int y = -1; y < height / 50 +1; y++) {       
+      for(int y = -1; y < height / 50 + 1; y++) {       
+        
+        // Position der Tile / Kachel berechnen
         int drawX = x*50 - posX % tileSize;
         int drawY = y*50 - posY % tileSize;
+        
+        
+        
+        // drawX/Y korrigieren, da sonst wenn (posX/Y - width/2) < 0 die Kacheln nach links versetzt sind, wenn posX/Y % tileSize(50) != 0.
+        // Liegt irgendwie am Modulo oder Teilen mit negativen Zahlen. Vielleicht weil: 1.23 -> 1 (nach links verschoben)  und  -1.23 -> -1 (nach rechts verschoben)
         if(posX - (width / 2.) < 0 && (posX % 50) != 0) drawX += 50;
         if(posY - (height / 2.) < 0 && (posY % 50) != 0) drawY += 50;
-           
         
-        if(x + kachelx >= 0 && x + kachelx < mapWidth && y + kachely >= 0 && y + kachely < mapHeight && map[x + kachelx][y + kachely] != null) {
-          image(map[x + kachelx][y + kachely].getIcon(), drawX, drawY, 50,50);
+        // Wenn x/y + offsetX/Y sich innerhalb des Rasters befindet und Bild vorhanden -> Bild zeichnen
+        if(x + offsetX >= 0 && x + offsetX < mapWidth && y + offsetY >= 0 && y + offsetY < mapHeight && map[x + offsetX][y + offsetY] != null) {
+          image(map[x + offsetX][y + offsetY].getIcon(), drawX, drawY, 50,50);
+        
+        // Sonst ist die Kachel außerhalb des Rasters/ der Map -> Rand zeichnen
         } else {
           rectMode(CORNER);
           fill(50);
@@ -77,35 +90,6 @@ class Map
         }
       }
     }
-    
-    
-    
-    
-    
-    
-    
-    //                   ( positionX - (nPixel über spieler) ) / kachelgröße -> Nachkommastellen streichen 
-    // ***********  ********************
-    //* ----------  -------------------*
-    //*-----------  -------------------*
-    //*-----------  -------------------*
-    
-    /*for (int x = 0; x < width / tileSize + 2; x++)
-    {
-      for (int y = 0; y < height / tileSize + 2; y++)
-      {
-        if( ( kachelx + x >= 0 ) && ( kachely + y >= 0 ) && ( kachelx + x < mapWidth ) && ( kachely+y < mapHeight ) && ( map[kachelx + x][kachely + y] != null) ) {
-          int drawX = x * tileSize - posX % tileSize;
-          int drawY = y * tileSize - posY % tileSize;       
-          
-          image( map[kachelx + x][kachely + y].getIcon(), drawX, drawY, tileSize, tileSize);
-        } else {
-          
-        }
-        //fill(150);
-        //rect(i*75 - x%75, j*75 - y%75, 75, 75);
-      }
-    }*/
   }
   
   int getWidth() {

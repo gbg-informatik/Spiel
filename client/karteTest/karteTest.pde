@@ -24,7 +24,7 @@ void draw()
   test.drawMap(posx,posy);
   fill(0);
   rectMode(CENTER);
-  rect(width/2,height/2,25,25);
+  rect(width/2.,height/2.,25,25);
 }
 
 void keyPressed()
