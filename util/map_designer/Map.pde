@@ -90,11 +90,11 @@ class Map {
       
       if(fill) {
         
-        // BUG! funktioniert noch nicht so ganz.. 
-        // zeichnet nur nach oben und nach links
+        Tile replace = tiles[x][y];
+        
         for(int i = 0; i < mapWidth; i++) {
           for(int j = 0; j < mapHeight; j++) {
-            if( tiles[i][j] == tiles[x][y]) {
+            if( tiles[i][j] == replace) {
               tiles[i][j] = tile;
             }
           }
@@ -115,8 +115,8 @@ class Map {
   
   void show() {
     stroke(50);
-    for(int x = 0; x < drawWidth / 50; x++) {
-      for(int y = 0; y < drawHeight / 50; y++) {
+    for(int x = 0; x < drawWidth / 50 +1; x++) {
+      for(int y = 0; y < drawHeight / 50 +1; y++) {
         if(x + posX >= 0 && x + posX < mapWidth && y + posY >= 0 && y + posY < mapHeight) {
           if(tiles[x + posX][y + posY] != null) {
             image(tiles[x + posX][y + posY].getIcon(), xOffset + x*50, y*50, 50,50);
