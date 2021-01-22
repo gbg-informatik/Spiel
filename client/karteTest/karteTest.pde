@@ -16,7 +16,7 @@ void setup()
   background(0);
   test.loadTiles();
   test.loadMap("map.json");
-  size(1000, 700, P2D);
+  size(1000, 700);
   surface.setResizable(true);
   
   dispWidth = test.getWidth() * test.getTileSize();
@@ -53,6 +53,7 @@ void draw()
   rect(width/2.,height/2.,25,25);  
 }
 
+// keyPressed verursacht lags, wenn die Koordinatenabfrage da drin stattfindet, deshalb oben in draw() und mit boolean
 void keyPressed()
 {
  if (key == 119) { // W
