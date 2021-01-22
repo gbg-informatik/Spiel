@@ -1,3 +1,4 @@
+// Map variable erstellen 
 Map test = new Map();
 
 int dispWidth;
@@ -14,10 +15,13 @@ boolean dKey = false;
 void setup()
 {                    
   background(0);
-  test.loadTiles();
-  test.loadMap("map.json");
   size(1000, 700);
   surface.setResizable(true);
+  
+  // dateien der Tiles laden
+  test.loadTiles();
+  // Map datei laden
+  test.loadMap("map.json");
   
   dispWidth = test.getWidth() * test.getTileSize();
   dispHeight = test.getHeight() * test.getTileSize();
@@ -43,11 +47,11 @@ void draw()
   {
     posy += 5;
   }
-  
-  
-  
-  
+    
+  // Map zseichnen anhand der Spielerposition, spieler in der Mitte
   test.drawMap(posx,posy);
+  
+  // Spieler Platzhalter
   fill(0);
   rectMode(CENTER);
   rect(width/2.,height/2.,25,25);  

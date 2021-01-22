@@ -53,29 +53,29 @@ class Map
   {
     clear();
     // Verschiebung des Bildausschnittes auf der Map
-    double _offsetX = (posX - (width / 2.));
-    double _offsetY = (posY - (height / 2.));
+    double drawOffsetX = (posX - (width / 2.));
+    double drawOffsetY = (posY - (height / 2.));
     
     // x/y index der oberen linken Kachel im Bild berechnen.
-    int offsetX = (int) ( _offsetX / 50 ) ;
-    int offsetY = (int) (_offsetY / 50 );
+    int tileOffsetX = (int) ( drawOffsetX / tileSize ) ;
+    int tileOffsetY = (int) (drawOffsetY / tileSize );
     
     // Verschiebung der Kacheln, damit die Map unter dem Spieler smooth läuft und er nicht von Kachel zu Kachel "springt" 
-    int addX = (int)(_offsetX % 50);
-    int addY = (int )(_offsetY % 50);
+    int addX = (int)(drawOffsetX % tileSize);
+    int addY = (int )(drawOffsetY % tileSize);
     int drawX, drawY;
     
     // Alle Tiles im Bildausschnitt Zeichnen
-    for(int x = -1; x < width / 50 + 2; x++) {
-      for(int y = -1; y < height / 50 + 2; y++) {       
+    for(int x = -1; x < width / tileSize + 2; x++) {
+      for(int y = -1; y < height / tileSize + 2; y++) {
         
         // Position der Tile / Kachel berechnen
         drawX = x*50 - addX;
         drawY = y*50 - addY;
                        
-        // Wenn x/y + offsetX/Y sich innerhalb des Rasters befindet und Bild vorhanden -> Bild zeichnen
-        if(x + offsetX >= 0 && x + offsetX < mapWidth && y + offsetY >= 0 && y + offsetY < mapHeight && map[x + offsetX][y + offsetY] != null) {
-          image(map[x + offsetX][y + offsetY].getIcon(), drawX, drawY);
+        // Wenn x/y + tileOffsetX/Y sich innerhalb des Rasters befindet und Bild vorhanden -> Bild zeichnen
+        if(x + tileOffsetX >= 0 && x + tileOffsetX < mapWidth && y + tileOffsetY >= 0 && y + tileOffsetY < mapHeight && map[x + tileOffsetX][y + tileOffsetY] != null) {
+          image(map[x + tileOffsetX][y + tileOffsetY].getIcon(), drawX, drawY);
         
         // Sonst ist die Kachel außerhalb des Rasters/ der Map -> Rand zeichnen
         /*} else {
