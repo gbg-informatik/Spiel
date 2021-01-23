@@ -9,8 +9,8 @@ int id, playercount = 1;
 
 void setup() {
   surface.setResizable(true);
-  fullScreen();
-  //xsize(300, 300);  //1920,1080
+  //fullScreen();
+  size(300, 300);  //1920,1080
   //--Set up Client-------------
   c = new Client();
   try {
@@ -35,12 +35,6 @@ void setup() {
 }
 
 void draw() {
-  clear();
-  background(255);
-  
-  // Map zseichnen anhand der Spielerposition, spieler in der Mitte
-  map.drawMap(players[id].getPos());
-  
   try {
     println("sending");
     c.sendPosition();
@@ -49,6 +43,13 @@ void draw() {
   catch(Exception e) { 
     e.printStackTrace();
   }
+
+  clear();
+  background(255);
+  
+  // Map zseichnen anhand der Spielerposition, spieler in der Mitte
+  map.drawMap(players[id].getPos());
+  
   for (int i = 0; i < players.length; i++) {
     if (i != id) {
       players[i].globalToLocal(players[id].globalCords);
