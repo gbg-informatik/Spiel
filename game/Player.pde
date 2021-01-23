@@ -96,6 +96,21 @@ class Player {
   }
 
   void move() {
+    int collisions = map.collisionDetection(globalCords,tileSize);
+    println("Collisions: " + binary(collisions,8));
+
+    if(getBit(collisions,0) == 0){
+      aMov = 0;
+    }
+    if(getBit(collisions,2) == 0){
+      wMov = 0;
+    }
+    if(getBit(collisions,4) == 0){
+      dMov = 0;
+    }
+    if(getBit(collisions,6) == 0){
+      sMov = 0;
+    }
     
     // Wenn das Fenster nicht mehr angewählt ist die Bewegung reseten, da sich der Spieler sonst dauerhaft bewegt
     if(!focused) {
@@ -149,6 +164,10 @@ class Player {
   
   PVector getPos(){
     return globalCords;
+  }
+  
+  byte getBit(int input, int pos){
+    return byte((input >> pos) & 1);
   }
   
   //--Client Stuff--------

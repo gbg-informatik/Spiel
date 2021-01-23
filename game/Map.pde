@@ -99,6 +99,31 @@ class Map
     }
   }
 
+  int collisionDetection(PVector pos, float pSize){  //l;  lo;  o;  ro;  r;  ru;  u;  lu    (only first eight bits of byte get used)
+    int returnByte = 255;                            //0;   1;  2;   3;  4;   5;  6;   7
+
+    //--Edge of Map--------
+    if(pos.x-pSize/2 <= 0){    //left edge of map
+      returnByte = changeBit(returnByte, 0, 0);        //input byte, position, value
+    }
+    if(pos.x+pSize/2 >= mapWidth*tileSize){    //right edge of map
+      returnByte = changeBit(returnByte, 4, 0);        //input byte, position, value    
+    }
+    if(pos.y-pSize/2 <= 0){    //top edge of map
+      returnByte = changeBit(returnByte, 2, 0);        //input byte, position, value    
+    }
+    if(pos.y+pSize/2 >= mapHeight*tileSize){    //bottom edge of map
+      returnByte = changeBit(returnByte, 6, 0);        //input byte, position, value    
+    }
+    
+    return returnByte;
+  }
+
+  int changeBit(int input, int pos, int val){
+    int mask = 1 << pos;
+    return (input & ~mask) | ((val << pos) & mask);
+  }
+
   int getWidth() {
     return mapWidth;
   }

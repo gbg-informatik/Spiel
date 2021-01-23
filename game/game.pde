@@ -1,6 +1,7 @@
 import java.io.*; 
 import java.net.*; 
 import java.util.Scanner; 
+import java.lang.Integer;
 
 Player players[];
 Client c;
@@ -52,8 +53,7 @@ void draw() {
   }
   for (int i = 0; i < players.length; i++) {
     if (i != id) {
-      players[i].globalToLocal(players[id].getPos());
-      players[i].move();
+      players[i].globalToLocal(players[id].globalCords);
       players[i].show();
     }
   }  
