@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 Player players[];
 Client c;
+Map map;
 int id, playercount = 1;
 
 void setup() {
@@ -27,14 +28,19 @@ void setup() {
   }
 
   background(255);
-  fill(0);
-
+  
+  map = new Map("test.json", 50);
+  
   println("Setup done");
 }
 
 void draw() {
   clear();
   background(255);
+  
+  // Map zseichnen anhand der Spielerposition, spieler in der Mitte
+  map.drawMap(players[id].getPos());
+  
   try {
     println("sending");
     c.sendPosition();

@@ -81,7 +81,7 @@ public class Client
             players[i].changePosition(Float.valueOf(split[i*2]), Float.valueOf(split[i*2+1]));            
           }
         }
-      }    
+      }
       catch(Exception e) { 
         e.printStackTrace();
       }
