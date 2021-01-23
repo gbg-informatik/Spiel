@@ -1,0 +1,6 @@
+{
+  "default": "sand",
+  "breite": 100,
+  "hoehe": 500,
+  "name": "sandmap"
+}
