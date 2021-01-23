@@ -15,18 +15,18 @@ class Player {
   float diagonalMove = sqrt(12.5);
 
   //Box OffSet from Cord
-  int xOffset = 50;
-  int yOffset = 50;
-  
+  int tileSize;
+
   //Display
   color col = color(0);
   PImage body;
 
-  Player(PVector p, color c, int id){
+  Player(PVector p, color c, int id, int tileSize_){
     globalCords = new PVector(p.x,p.y);
     localCords = new PVector(0,0);
     col = c;
     body = getBody(id);
+    tileSize = tileSize_;
   }
   
   void globalToLocal(PVector pPos){
@@ -35,8 +35,8 @@ class Player {
 
   void showPlayer() {
     //fill(col);
-    //rect((width/2)-(xOffset/2), (height/2)-(yOffset/2), xOffset, yOffset);
-    image(body,(width/2)-(xOffset/2), (height/2)-(yOffset/2), xOffset, yOffset);
+    //rect((width/2)-(tileSize/2), (height/2)-(tileSize/2), tileSize, tileSize);
+    image(body,(width/2)-(tileSize/2), (height/2)-(tileSize/2), tileSize, tileSize);
   }
 
   void pseudoCords() {
@@ -109,24 +109,8 @@ class Player {
 
   void show() {
     //fill(col);
-    //rect(localCords.x+width/2-xOffset, localCords.y+height/2-yOffset, 50, 50);
-    image(body,localCords.x+width/2-xOffset, localCords.y+height/2-yOffset, xOffset, yOffset);
-  }
-
-  boolean xCordCheck(float _x) {
-    if (_x>(localCords.x-width/2-xOffset) && _x<(localCords.x+width/2+xOffset)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  boolean yCordCheck(float _y) {
-    if (_y>(localCords.y-height/2-yOffset) && _y<(localCords.y+height/2+yOffset)) {
-      return true;
-    } else {
-      return false;
-    }
+    //rect(localCords.x+width/2-tileSize, localCords.y+height/2-tileSize, 50, 50);
+    image(body,localCords.x+width/2-tileSize, localCords.y+height/2-tileSize, tileSize, tileSize);
   }
   
   PImage getBody(int id){
@@ -149,6 +133,10 @@ class Player {
     return loadImage(dir);
   }
   
+  PVector getPos(){
+    return globalCords;
+  }
+  
   //--Client Stuff--------
   String getPosition() {
     String position = "";
@@ -160,5 +148,4 @@ class Player {
     globalCords.x = x;
     globalCords.y = y;
   }
-
 }
