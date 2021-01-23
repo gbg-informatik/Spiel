@@ -12,16 +12,15 @@ boolean aKey = false;
 boolean sKey = false;
 boolean dKey = false;
 
-void setup()
-{                    
+void setup() {
   background(0);
-  size(1000, 700);
+  size(1000, 700, P2D);
   surface.setResizable(true);
   
   // dateien der Tiles laden
   test.loadTiles();
   // Map datei laden
-  test.loadMap("map.json");
+  test.loadMap("test.json");
   
   dispWidth = test.getWidth() * test.getTileSize();
   dispHeight = test.getHeight() * test.getTileSize();

@@ -28,7 +28,7 @@ class Map
   // map aus json einlesen
   void loadMap(String filename) {
     // .json einlesen
-    JSONObject json_map = loadJSONObject(filename);
+    JSONObject json_map = loadJSONObject( "../../maps/" + filename);
     
     // Rastergröße aus .json auslesen 
     mapWidth = json_map.getInt("width");

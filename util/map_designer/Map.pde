@@ -79,7 +79,7 @@ class Map {
       json.setJSONArray(block_array_names.get(i), block_arrays.get(i));
     }
     
-    saveJSONObject(json, name + ".json" ,"compact");
+    saveJSONObject(json, "../../maps/" + name + ".json" ,"compact");
   }
   
   void set(Tile tile, boolean fill) {
