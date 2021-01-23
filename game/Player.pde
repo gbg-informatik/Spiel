@@ -96,6 +96,15 @@ class Player {
   }
 
   void move() {
+    
+    // Wenn das Fenster nicht mehr angewählt ist die Bewegung reseten, da sich der Spieler sonst dauerhaft bewegt
+    if(!focused) {
+      wMov = 0;
+      aMov = 0;
+      sMov = 0;
+      dMov = 0;
+    }
+    
     yMov = wMov+sMov;
     xMov = aMov+dMov;
     if (xMov != 0 && yMov == 0) {
