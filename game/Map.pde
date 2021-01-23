@@ -2,7 +2,7 @@ class Map
 {
   // Tiles einlesen
   int numTiles = 7;
-  String gPath = "../graphics/map/";
+  String gPath = "graphics/map/";
   StringList tileNames = new StringList(new String [] {"boden", "mauer", "lava", "wasser", "buton", "coop_a", "coop_b"});
   String tileImageNames[] = {"Treibsand.png", "MauerEinzel.png", 
     "LavaKreuzung.png", "WasserKreuzung.png", 
@@ -37,7 +37,7 @@ class Map
   // map aus json einlesen
   void loadMap(String filename) {
     // .json einlesen
-    JSONObject json_map = loadJSONObject( "../../maps/" + filename);
+    JSONObject json_map = loadJSONObject( "../maps/" + filename);
 
     // Rastergröße aus .json auslesen 
     mapWidth = json_map.getInt("width");
