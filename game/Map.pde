@@ -16,16 +16,16 @@ class Map
   // größe des Rasters
   int mapWidth, mapHeight;
   int tileSize;
-  
-  
+
+
   Map(String filename, int tileSize) {
     this.tileSize = tileSize;
     // dateien der Tiles laden
     loadTiles();
-  // Map datei laden
+    // Map datei laden
     loadMap(filename);
   }
-  
+
 
   // tiles einlesen
   void loadTiles() {
@@ -99,27 +99,60 @@ class Map
     }
   }
 
-  int collisionDetection(PVector pos, float pSize){  //l;  lo;  o;  ro;  r;  ru;  u;  lu    (only first eight bits of byte get used)
+  int collisionDetection(PVector pos, float pSize) {  //l;  lo;  o;  ro;  r;  ru;  u;  lu    (only first eight bits of byte get used)
     int returnByte = 255;                            //0;   1;  2;   3;  4;   5;  6;   7
 
     //--Edge of Map--------
-    if(pos.x-pSize/2 <= 0){    //left edge of map
+    if (pos.x-pSize/2 <= 0) {    //left edge of map
       returnByte = changeBit(returnByte, 0, 0);        //input byte, position, value
     }
-    if(pos.x+pSize/2 >= mapWidth*tileSize){    //right edge of map
-      returnByte = changeBit(returnByte, 4, 0);        //input byte, position, value    
+    if (pos.x+pSize/2 >= mapWidth*tileSize) {    //right edge of map
+      returnByte = changeBit(returnByte, 4, 0);        //input byte, position, value
     }
-    if(pos.y-pSize/2 <= 0){    //top edge of map
-      returnByte = changeBit(returnByte, 2, 0);        //input byte, position, value    
+    if (pos.y-pSize/2 <= 0) {    //top edge of map
+      returnByte = changeBit(returnByte, 2, 0);        //input byte, position, value
     }
-    if(pos.y+pSize/2 >= mapHeight*tileSize){    //bottom edge of map
-      returnByte = changeBit(returnByte, 6, 0);        //input byte, position, value    
+    if (pos.y+pSize/2 >= mapHeight*tileSize) {    //bottom edge of map
+      returnByte = changeBit(returnByte, 6, 0);        //input byte, position, value
     }
-    
+
+    //--Walls and co-------
+    int mPosX = int(pos.x/pSize);
+    int mPosY = int(pos.y/pSize);
+    if (mPosX > 0)
+      returnByte = colliding(pos, pSize, mPosX - 1, mPosY)     ? changeBit(returnByte, 0, 0) : returnByte;
+    if (mPosX > 0 && mPosY > 0)
+      returnByte = colliding(pos, pSize, mPosX - 1, mPosY - 1) ? changeBit(returnByte, 1, 0) : returnByte;  
+    if (mPosY > 0)
+      returnByte = colliding(pos, pSize, mPosX, mPosY - 1) ? changeBit(returnByte, 2, 0) : returnByte;
+    if (mPosX < mapWidth && mPosY > 0)
+      returnByte = colliding(pos, pSize, mPosX + 1, mPosY - 1) ? changeBit(returnByte, 3, 0) : returnByte;  
+    if (mPosX < mapWidth)
+      returnByte = colliding(pos, pSize, mPosX + 1, mPosY)     ? changeBit(returnByte, 4, 0) : returnByte;
+    if (mPosX < mapWidth && mPosY < mapHeight)
+      returnByte = colliding(pos, pSize, mPosX + 1, mPosY + 1) ? changeBit(returnByte, 5, 0) : returnByte;  
+    if (mPosY < mapHeight)
+      returnByte = colliding(pos, pSize, mPosX, mPosY + 1) ? changeBit(returnByte, 6, 0) : returnByte;
+    if (mPosX > 0 && mPosY < mapHeight)
+      returnByte = colliding(pos, pSize, mPosX - 1, mPosY + 1) ? changeBit(returnByte, 7, 0) : returnByte;  
+
     return returnByte;
   }
 
-  int changeBit(int input, int pos, int val){
+  boolean colliding(PVector p, float s, int tileX, int tileY) {
+    if (map[tileX][tileY].getName().equals("mauer")) {
+      println("Current Tile: " + tileX + " " + tileY + " " + map[tileX][tileY].getName());
+      float distX = p.x < tileX*tileSize ? p.x - (tileX-.5)*tileSize : p.x > tileX*(tileSize + 1) ? p.x - (tileX+.5)*tileSize : 0; 
+      float distY = p.y < tileY*tileSize ? p.y - (tileY-.5)*tileSize : p.y > tileY*(tileSize + 1) ? p.y - (tileY+.5)*tileSize : 0; 
+      float dist = sqrt(pow(distX, 2) + pow(distY, 2));
+      println("dists: " + distX + " " + distY + " " + dist);
+      if (dist <= s)
+        return true;
+    }
+    return false;
+  }
+
+  int changeBit(int input, int pos, int val) {
     int mask = 1 << pos;
     return (input & ~mask) | ((val << pos) & mask);
   }
