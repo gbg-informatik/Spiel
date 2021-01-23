@@ -8,8 +8,10 @@ Map map;
 int id, playercount = 1;
 
 void setup() {
+  size(1280, 720);  //1920,1080
   surface.setResizable(true);
-  size(500, 500);  //1920,1080
+  //frameRate(60);
+
   
   //--Set up Client-------------
   c = new Client();
@@ -50,14 +52,14 @@ void draw() {
   }
   for (int i = 0; i < players.length; i++) {
     if (i != id) {
-      players[i].globalToLocal(players[id].globalCords);
+      players[i].globalToLocal(players[id].getPos());
       players[i].move();
       players[i].show();
     }
   }  
   players[id].move();
-  players[id].pseudoCords();
-  players[id].showPlayer();
+  players[id].showCords();
+  players[id].show();
 }
 
 void keyPressed() {

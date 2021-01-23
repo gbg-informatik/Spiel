@@ -39,9 +39,14 @@ class Player {
     image(body,(width/2)-(tileSize/2), (height/2)-(tileSize/2), tileSize, tileSize);
   }
 
-  void pseudoCords() {
-    text(globalCords.x, 20, 20);
-    text(globalCords.y, 20, 40);
+  void showCords() {
+    fill(0);
+    text("global", 10, 20);
+    text(globalCords.x, 10, 40);
+    text(globalCords.y, 10, 60);
+    text("local", 10, 80);
+    text(localCords.x, 10, 100);
+    text(localCords.y, 10, 120);
   }
 
   void press(char _input) {
@@ -110,7 +115,7 @@ class Player {
   void show() {
     //fill(col);
     //rect(localCords.x+width/2-tileSize, localCords.y+height/2-tileSize, 50, 50);
-    image(body,localCords.x+width/2-tileSize, localCords.y+height/2-tileSize, tileSize, tileSize);
+    image(body,localCords.x+width/2 - tileSize/2, localCords.y+height/2 - tileSize/2, tileSize, tileSize);
   }
   
   PImage getBody(int id){
