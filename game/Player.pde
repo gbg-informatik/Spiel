@@ -149,6 +149,10 @@ class Player {
     return loadImage(dir);
   }
   
+  PVector getPos(){
+    return globalCords;
+  }
+  
   //--Client Stuff--------
   String getPosition() {
     String position = "";
@@ -160,5 +164,4 @@ class Player {
     globalCords.x = x;
     globalCords.y = y;
   }
-
 }
