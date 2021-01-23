@@ -9,8 +9,8 @@ int id, playercount = 1;
 
 void setup() {
   surface.setResizable(true);
-  fullScreen();
-  //xsize(300, 300);  //1920,1080
+  size(500, 500);  //1920,1080
+  
   //--Set up Client-------------
   c = new Client();
   try {
@@ -19,6 +19,7 @@ void setup() {
   catch (IOException e) {
     e.printStackTrace();
   }
+  
   //--Initialise Players--------
   players = new Player[playercount];
   for (int i = 0; i < players.length; i++) {
@@ -27,8 +28,6 @@ void setup() {
     colorMode(RGB, 255,255,255);
   }
 
-  background(255);
-  
   map = new Map("test.json", 50);
   
   println("Setup done");

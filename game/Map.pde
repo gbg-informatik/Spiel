@@ -64,7 +64,6 @@ class Map
   // map zeichnen
   void drawMap(int posX, int posY)    // posX / posY steht für den Bildmittelpunkt der Map / Spieler in der Mitte des Displays
   {
-    clear();
     // Verschiebung des Bildausschnittes auf der Map
     double drawOffsetX = (posX - (width / 2.));
     double drawOffsetY = (posY - (height / 2.));
