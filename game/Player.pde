@@ -130,7 +130,7 @@ class Player {
   }
   
   PImage getBody(int id){
-    String dir = "../graphics/player/";
+    String dir = "graphics/player/";
     switch(id){
       case 0:   dir += "Blau-A.png";   break;
       case 1:   dir += "Blau-B.png";   break;
