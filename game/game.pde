@@ -9,7 +9,7 @@ Map map;
 int id, playercount = 1;
 
 void setup() {
-  size(1280, 720);  //1920,1080
+  size(1280, 720, P2D);  //1920,1080
   surface.setResizable(true);
   //frameRate(60);
 
