@@ -1,5 +1,6 @@
 class Player {
   //Button Press
+  PVector movement;  //saves movementDirection
   int aMov=0;
   int dMov=0;
   int sMov=0;
@@ -51,20 +52,20 @@ class Player {
 
   void press(char _input) {
     switch(_input) {
-    case 'a':
-      aMov = -1;
+    case 'a': 
+//      aMov = -1;
       break;
 
     case 'd':
-      dMov = 1;
+//      dMov = 1;
       break;
 
     case 's':
-      sMov = 1;
+//      sMov = 1;
       break;
 
     case 'w':
-      wMov = -1;
+//      wMov = -1;
       break;
 
     default:
