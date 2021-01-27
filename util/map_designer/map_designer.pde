@@ -14,6 +14,16 @@ void setup() {
   Tile coop_a = new Tile("coop_a", 5, gPath + "CoOp-A.png");
   Tile coop_b = new Tile("coop_b", 6, gPath + "CoOp-B.png");
   
+  Tile beschleunigung = new Tile("beschleunigung", 7, gPath + "Accelerator.png");
+  Tile abbremsung = new Tile("abbremsung", 8, gPath + "Deceleration.png");
+  Tile electricfloor = new Tile("electricfloor", 9, gPath + "Electric Floor.png");
+  Tile hiddendoor = new Tile("hidden door", 10, gPath + "Hidden door; open.png");
+  Tile horgan = new Tile("horgan", 11, gPath + "Horgan.png");
+  Tile mine = new Tile("mine", 12, gPath + "Mine; sichtbar.png");
+  Tile mysteryobject = new Tile("mysteryobject", 13, gPath + "Mystery object.png");
+  Tile schlange = new Tile("schlange", 14, gPath + "Schlange.png");
+  Tile treibsand = new Tile("treibsand", 15, gPath + "Treibsand.png");
+  
   toolbar = new Toolbar(0,0, 50, height);
   toolbar.addTile(boden);
   toolbar.addTile(wall);
@@ -22,6 +32,16 @@ void setup() {
   toolbar.addTile(button);
   toolbar.addTile(coop_a);
   toolbar.addTile(coop_b);
+  
+  toolbar.addTile(beschleunigung);
+  toolbar.addTile(abbremsung);
+  toolbar.addTile(hiddendoor);
+  toolbar.addTile(horgan);
+  toolbar.addTile(mine);
+  toolbar.addTile(mysteryobject);
+  toolbar.addTile(schlange);
+  toolbar.addTile(treibsand);
+  
   
   map = new Map("map", 0, 50, 50, width-50, height, 50);
 }
