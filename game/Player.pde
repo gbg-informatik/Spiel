@@ -1,19 +1,13 @@
 class Player {
   //Button Press
-  PVector movement;  //saves movementDirection
   int aMov=0;
   int dMov=0;
   int sMov=0;
   int wMov=0;
-  //Move Int
-  int xMov=0;
-  int yMov=0;
 
   //Cords n Movement Length
   PVector globalCords;
-  PVector localCords;
-  
-  float diagonalMove = sqrt(12.5);
+  PVector localCords;  
 
   //Box OffSet from Cord
   int tileSize;
@@ -52,20 +46,20 @@ class Player {
 
   void press(char _input) {
     switch(_input) {
-    case 'a': 
-//      aMov = -1;
+    case 'a':  
+      aMov = -1;
       break;
 
-    case 'd':
-//      dMov = 1;
+    case 'd':  
+      dMov = 1;
       break;
 
-    case 's':
-//      sMov = 1;
+    case 's':  
+      sMov = 1;
       break;
 
-    case 'w':
-//      wMov = -1;
+    case 'w':  
+      wMov = -1;
       break;
 
     default:
@@ -75,19 +69,19 @@ class Player {
 
   void release(char _input) {
     switch(_input) {
-    case 'a':
+    case 'a':  
       aMov = 0;
       break;
 
-    case 'd':
+    case 'd':  
       dMov = 0;
       break;
 
-    case 's':
+    case 's':  
       sMov = 0;
       break;
 
-    case 'w':
+    case 'w':  
       wMov = 0;
       break;
 
@@ -99,42 +93,32 @@ class Player {
   void move() {
     int collisions = map.collisionDetection(globalCords,tileSize);
     println("Collisions: " + binary(collisions,8));
-
-    if(getBit(collisions,0) == 0){
-      aMov = 0;
+    
+    PVector finMove = new PVector(aMov+dMov,wMov+sMov);
+    
+    if(getBit(collisions,0) == 0 && finMove.x < 0){  //a
+      finMove.x += 1;
     }
-    if(getBit(collisions,2) == 0){
-      wMov = 0;
+    if(getBit(collisions,2) == 0 && finMove.y < 0){  //w
+      finMove.y += 1;
     }
-    if(getBit(collisions,4) == 0){
-      dMov = 0;
+    if(getBit(collisions,4) == 0 && finMove.x > 0){  //d
+      finMove.x += -1;
     }
-    if(getBit(collisions,6) == 0){
-      sMov = 0;
+    if(getBit(collisions,6) == 0 && finMove.y > 0){  //s
+      finMove.y += -1;
     }
     
     // Wenn das Fenster nicht mehr angewählt ist die Bewegung reseten, da sich der Spieler sonst dauerhaft bewegt
     if(!focused) {
+      finMove = new PVector(0,0);
       wMov = 0;
       aMov = 0;
       sMov = 0;
       dMov = 0;
     }
     
-    yMov = wMov+sMov;
-    xMov = aMov+dMov;
-    if (xMov != 0 && yMov == 0) {
-      globalCords.x += 5*xMov;
-    }
-
-    if (xMov == 0 && yMov != 0) {
-      globalCords.y += 5*yMov;
-    }
-
-    if (xMov != 0 && yMov != 0) {
-      globalCords.y += diagonalMove*yMov;
-      globalCords.x += diagonalMove*xMov;
-    }
+    globalCords.add(finMove.setMag(5));
   }
 
   void show() {
