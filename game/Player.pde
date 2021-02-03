@@ -124,8 +124,8 @@ class Player {
   void show() {
     fill(col);
     //rect(localCords.x+width/2-tileSize, localCords.y+height/2-tileSize, 50, 50);
-    //image(body,localCords.x+width/2 - tileSize/2, localCords.y+height/2 - tileSize/2, tileSize, tileSize);
-    ellipse(localCords.x + width/2,localCords.y +height/2,tileSize,tileSize);
+    image(body,localCords.x+width/2 - tileSize/2, localCords.y+height/2 - tileSize/2, tileSize, tileSize);
+    //ellipse(localCords.x + width/2,localCords.y +height/2,tileSize,tileSize);
   }
   
   PImage getBody(int id){
