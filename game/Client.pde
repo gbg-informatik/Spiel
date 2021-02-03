@@ -52,11 +52,11 @@ public class Client
 
   void sendPosition() {
     if (enabled) {
-      println("sending: " + id); 
+      //println("sending: " + id); 
       String data = id + ";" + players[id].getPosition();
       try {
         send(data);
-        println("data send");
+      //  println("data send");
       }
       catch(Exception e) { 
         e.printStackTrace();
@@ -70,11 +70,11 @@ public class Client
   void reciveData() {
     if (enabled) {
       try {
-        println("reciving");
+      //  println("reciving");
         String data = recieve();
-        println(data);
+       // println(data);
         data = data.replaceAll("[^0-9+;+.+-]+", "");  //remove all characters in ASCII range except 0-9 ; . -  --> cleans up recieved string
-        println(data);
+       // println(data);
         String[] split = data.split(";");
         for (int i = 0; i < players.length; i++) {
           if (i != id) {
@@ -95,7 +95,7 @@ public class Client
     if (enabled) {
       try {
         //System.out.println(dis.readUTF()); 
-        println(data);
+      //  println(data);
         dos.writeUTF(data);
 
         // If client sends exit,close this connection 
@@ -107,7 +107,7 @@ public class Client
           System.out.println("Connection closed"); 
           endStream();
         }
-        println("sent");
+      //x  println("sent");
       }    
       catch(Exception e) { 
         e.printStackTrace();

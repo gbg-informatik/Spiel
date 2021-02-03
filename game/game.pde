@@ -9,7 +9,7 @@ Map map;
 int id, playercount = 1;
 
 void setup() {
-  size(1280, 720, P2D);  //1920,1080
+  size(300, 300, P2D);  //1920,1080
   surface.setResizable(true);
   //frameRate(60);
 
@@ -44,7 +44,7 @@ void draw() {
   map.drawMap(players[id].getPos());
   
   try {
-    println("sending");
+ //  println("sending");
     c.sendPosition();
     c.reciveData();
   }

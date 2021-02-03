@@ -92,7 +92,7 @@ class Player {
 
   void move() {
     int collisions = map.collisionDetection(globalCords,tileSize);
-    println("Collisions: " + binary(collisions,8));
+    //println("Collisions: " + binary(collisions,8));
     
     PVector finMove = new PVector(aMov+dMov,wMov+sMov);
     

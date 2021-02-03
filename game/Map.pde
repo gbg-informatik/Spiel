@@ -120,21 +120,21 @@ class Map
     int mPosX = int(pos.x/pSize);
     int mPosY = int(pos.y/pSize);
     if (mPosX > 0)
-      returnByte = colliding(pos, pSize, mPosX - 1, mPosY)     ? changeBit(returnByte, 0, 0) : returnByte;
+      returnByte = collidingTwo(pos, pSize, mPosX - 1, mPosY)     ? changeBit(returnByte, 0, 0) : returnByte;
     if (mPosX > 0 && mPosY > 0)
-      returnByte = colliding(pos, pSize, mPosX - 1, mPosY - 1) ? changeBit(returnByte, 1, 0) : returnByte;  
+      returnByte = collidingTwo(pos, pSize, mPosX - 1, mPosY - 1) ? changeBit(returnByte, 1, 0) : returnByte;  
     if (mPosY > 0)
-      returnByte = colliding(pos, pSize, mPosX, mPosY - 1) ? changeBit(returnByte, 2, 0) : returnByte;
+      returnByte = collidingTwo(pos, pSize, mPosX, mPosY - 1) ? changeBit(returnByte, 2, 0) : returnByte;
     if (mPosX < mapWidth && mPosY > 0)
-      returnByte = colliding(pos, pSize, mPosX + 1, mPosY - 1) ? changeBit(returnByte, 3, 0) : returnByte;  
+      returnByte = collidingTwo(pos, pSize, mPosX + 1, mPosY - 1) ? changeBit(returnByte, 3, 0) : returnByte;  
     if (mPosX < mapWidth)
-      returnByte = colliding(pos, pSize, mPosX + 1, mPosY)     ? changeBit(returnByte, 4, 0) : returnByte;
+      returnByte = collidingTwo(pos, pSize, mPosX + 1, mPosY)     ? changeBit(returnByte, 4, 0) : returnByte;
     if (mPosX < mapWidth && mPosY < mapHeight)
-      returnByte = colliding(pos, pSize, mPosX + 1, mPosY + 1) ? changeBit(returnByte, 5, 0) : returnByte;  
+      returnByte = collidingTwo(pos, pSize, mPosX + 1, mPosY + 1) ? changeBit(returnByte, 5, 0) : returnByte;  
     if (mPosY < mapHeight)
-      returnByte = colliding(pos, pSize, mPosX, mPosY + 1) ? changeBit(returnByte, 6, 0) : returnByte;
+      returnByte = collidingTwo(pos, pSize, mPosX, mPosY + 1) ? changeBit(returnByte, 6, 0) : returnByte;
     if (mPosX > 0 && mPosY < mapHeight)
-      returnByte = colliding(pos, pSize, mPosX - 1, mPosY + 1) ? changeBit(returnByte, 7, 0) : returnByte;  
+      returnByte = collidingTwo(pos, pSize, mPosX - 1, mPosY + 1) ? changeBit(returnByte, 7, 0) : returnByte;  
 
     return returnByte;
   }
@@ -148,6 +148,19 @@ class Map
       println("dists: " + distX + " " + distY + " " + dist);
       if (dist <= s)
         return true;
+    }
+    return false;
+  }
+  
+  boolean collidingTwo(PVector p_, float s, int tileX, int tileY){
+    PVector p = new PVector (p_.x,p_.y);
+    if (map[tileX][tileY].getName().equals("mauer")) {
+      float inside = tileSize/((p.dot(new PVector(tileX*tileSize,tileY*tileSize))) / p.mag() + new PVector(tileX*tileSize,tileY*tileSize).mag());
+      float dist   = (p.sub(new PVector(tileX*tileSize,tileY*tileSize)).mag()) - inside - s;
+      println("inside: " + inside + "  dist: " + dist);
+      if(dist <= 0){
+        return false;
+      }
     }
     return false;
   }
