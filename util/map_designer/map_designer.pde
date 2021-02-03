@@ -48,6 +48,9 @@ void setup() {
 }
 
 void draw() {
+   if (key == CODED) {
+    map.updateKeys();
+  }
   background(200);
   map.show();
   toolbar.show();
@@ -64,9 +67,7 @@ void mouseClicked() {
 }
 
 void keyPressed() {
-  if (key == CODED) {
-    map.updateKeys();
-  }
+ 
   toolbar.updateKeys();
   if(key == 's') {
     map.writeJSON();
