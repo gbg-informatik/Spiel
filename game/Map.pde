@@ -125,15 +125,15 @@ class Map
       returnByte = colliding(pos, pSize, mPosX - 1, mPosY - 1) ? changeBit(returnByte, 1, 0) : returnByte;  
     if (mPosY > 0)
       returnByte = colliding(pos, pSize, mPosX, mPosY - 1) ? changeBit(returnByte, 2, 0) : returnByte;
-    if (mPosX < mapWidth && mPosY > 0)
+    if (mPosX < mapWidth - 1 && mPosY > 0)
       returnByte = colliding(pos, pSize, mPosX + 1, mPosY - 1) ? changeBit(returnByte, 3, 0) : returnByte;  
-    if (mPosX < mapWidth)
+    if (mPosX < mapWidth - 1)
       returnByte = colliding(pos, pSize, mPosX + 1, mPosY)     ? changeBit(returnByte, 4, 0) : returnByte;
-    if (mPosX < mapWidth && mPosY < mapHeight)
+    if (mPosX < mapWidth - 1 && mPosY < mapHeight - 1)
       returnByte = colliding(pos, pSize, mPosX + 1, mPosY + 1) ? changeBit(returnByte, 5, 0) : returnByte;  
-    if (mPosY < mapHeight)
+    if (mPosY < mapHeight - 1)
       returnByte = colliding(pos, pSize, mPosX, mPosY + 1) ? changeBit(returnByte, 6, 0) : returnByte;
-    if (mPosX > 0 && mPosY < mapHeight)
+    if (mPosX > 0 && mPosY < mapHeight - 1 )
       returnByte = colliding(pos, pSize, mPosX - 1, mPosY + 1) ? changeBit(returnByte, 7, 0) : returnByte;  
 
     return returnByte;
