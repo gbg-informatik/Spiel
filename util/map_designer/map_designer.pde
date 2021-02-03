@@ -4,8 +4,8 @@ Map map;
 
 void setup() {
   
-  size(1280, 720);
-  String gPath = "../../client/graphics/map/";
+  size(1280, 720, P2D);
+  String gPath = "../../game/graphics/map/";
   Tile boden = new Tile("boden", 0, gPath + "Boden.png");
   Tile wall = new Tile("mauer", 1, gPath + "MauerEinzel.png");
   Tile lava = new Tile("lava", 2, gPath + "LavaKreuzung.png");
@@ -47,6 +47,9 @@ void setup() {
 }
 
 void draw() {
+   if (key == CODED) {
+    map.updateKeys();
+  }
   background(200);
   map.show();
   toolbar.show();
@@ -63,9 +66,7 @@ void mouseClicked() {
 }
 
 void keyPressed() {
-  if (key == CODED) {
-    map.updateKeys();
-  }
+  
   toolbar.updateKeys();
   if(key == 's') {
     map.writeJSON();

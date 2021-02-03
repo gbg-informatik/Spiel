@@ -1,4 +1,5 @@
 class Map {
+
   
   String name;
   int id;
@@ -143,4 +144,6 @@ class Map {
       posY++;
     }
   }
+  
+ 
 }
