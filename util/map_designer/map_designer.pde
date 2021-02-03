@@ -4,16 +4,17 @@ Map map;
 
 void setup() {
   
+  surface.setResizable(true);
   size(1280, 720, P2D);
+  
   String gPath = "../../game/graphics/map/";
   Tile boden = new Tile("boden", 0, gPath + "Boden.png");
-  Tile wall = new Tile("mauer", 1, gPath + "MauerEinzel.png");
-  Tile lava = new Tile("lava", 2, gPath + "LavaKreuzung.png");
-  Tile water = new Tile("wasser", 3, gPath + "WasserKreuzung.png");
+  Tile mauer1 = new Tile("mauer1", 1, gPath + "MauerEinzel.png");
+  Tile lava1 = new Tile("lava1", 2, gPath + "LavaKreuzung.png");
+  Tile wasser1 = new Tile("wasser1", 3, gPath + "WasserKreuzung.png");
   Tile button = new Tile("button", 4, gPath + "Button.png");
-  Tile coop_a = new Tile("coop_a", 5, gPath + "CoOp-A.png");
-  Tile coop_b = new Tile("coop_b", 6, gPath + "CoOp-B.png");
-  
+  //Tile coop_a = new Tile("coop_a", 5, gPath + "CoOp-A.png");
+  //Tile coop_b = new Tile("coop_b", 6, gPath + "CoOp-B.png");
   Tile beschleunigung = new Tile("beschleunigung", 7, gPath + "Accelerator.png");
   Tile abbremsung = new Tile("abbremsung", 8, gPath + "Deceleration.png");
   Tile electricfloor = new Tile("electricfloor", 9, gPath + "Electric Floor.png");
@@ -26,15 +27,15 @@ void setup() {
   
   toolbar = new Toolbar(0,0, 50, height);
   toolbar.addTile(boden);
-  toolbar.addTile(wall);
-  toolbar.addTile(lava);
-  toolbar.addTile(water);
+  toolbar.addTile(mauer1);
+  toolbar.addTile(lava1);
+  toolbar.addTile(wasser1);
   toolbar.addTile(button);
-  toolbar.addTile(coop_a);
-  toolbar.addTile(coop_b);
-  
+  //toolbar.addTile(coop_a);
+  //toolbar.addTile(coop_b);
   toolbar.addTile(beschleunigung);
   toolbar.addTile(abbremsung);
+  toolbar.addTile(electricfloor);
   toolbar.addTile(hiddendoor);
   toolbar.addTile(horgan);
   toolbar.addTile(mine);
@@ -43,13 +44,10 @@ void setup() {
   toolbar.addTile(treibsand);
   
   
-  map = new Map("map", 0, 50, 50, width-50, height, 50);
+  map = new Map("map", 0, 20, 150, width-50, height, 50);
 }
 
 void draw() {
-   if (key == CODED) {
-    map.updateKeys();
-  }
   background(200);
   map.show();
   toolbar.show();
@@ -66,7 +64,9 @@ void mouseClicked() {
 }
 
 void keyPressed() {
-  
+  if (key == CODED) {
+    map.updateKeys();
+  }
   toolbar.updateKeys();
   if(key == 's') {
     map.writeJSON();
